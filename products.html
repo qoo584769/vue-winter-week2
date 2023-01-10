@@ -73,7 +73,7 @@
 							<div class="card-body">
 								<h5 class="card-title">
 									{{ detail.data.title }}
-									<span class="badge bg-primary ms-2">{{  }}</span>
+									<span class="badge bg-primary ms-2">{{ detail.data.category }}</span>
 								</h5>
 								<p class="card-text">商品描述：{{ detail.data.description }}</p>
 								<p class="card-text">商品內容：{{ detail.data.content }}</p>
@@ -88,7 +88,7 @@
 							<img :src="image" alt="" class="images m-2">
 						</div>
 					</div>
-					<p class="text-secondary">請選擇一個商品查看</p>
+					<p class="text-secondary" v-else>請選擇一個商品查看</p>
 				</div>
 			</div>
 		</div>
@@ -103,34 +103,34 @@
 					const products = reactive({data:[]})
 					// 單一產品詳細
 					const detail = reactive({data:{}})
-					const path = ref('vue-winter')
-					const url = ref('https://vue3-course-api.hexschool.io/v2');
+					const path = 'vue-winter'
+					const url = 'https://vue3-course-api.hexschool.io/v2'
 
 					const checkToken = ()=>{
-						axios.post(`${url.value}/api/user/check`).then(res=>{
-							getProducts();
+						axios.post(`${url}/api/user/check`).then(res=>{
+							getProducts()
 						}).catch(err=>{
-							console.log('token驗證錯誤',err);
+							alert('token驗證錯誤',err)
 							location.href = 'login.html'
 						})
 					}
 
 					const getProducts = ()=>{
-						axios.get(`${url.value}/api/${path.value}/admin/products`).then(res=>{
+						axios.get(`${url}/api/${path}/admin/products`).then(res=>{
 							products.data = res.data.products
 						}).catch(err=>{
-							console.log('取得產品列表錯誤',err);
+							alert('取得產品列表錯誤',err)
 						})
 					}
 
 					onMounted(()=>{
-						const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexschool\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+						const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexschool\s*\=\s*([^;]*).*$)|^.*$/, "$1")
 	
 						// 把token預設到axios的標頭
 						// 之後的發送都會加上這個標頭
-						axios.defaults.headers.common.Authorization = token;
+						axios.defaults.headers.common.Authorization = token
 
-						checkToken();
+						checkToken()
 					})
           
 					return {
@@ -140,7 +140,7 @@
         }
       })
 
-      app.mount('#app');
+      app.mount('#app')
     </script>
 
 </body>

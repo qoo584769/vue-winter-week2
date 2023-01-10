@@ -31,12 +31,12 @@
 					<form id="form" class="form-signin">
 						<div class="form-floating mb-3">
 							<input type="email" class="form-control" id="username" placeholder="name@example.com" required autofocus
-								v-model.trim='userData.username'>
+								v-model.trim="userData.username">
 							<label for="username">Email address</label>
 						</div>
 						<div class="form-floating">
 							<input type="password" class="form-control" id="password" placeholder="Password" required
-								v-model.trim='userData.password'>
+								v-model.trim="userData.password">
 							<label for="password">Password</label>
 						</div>
 						<!-- 不加修飾詞會變成預設get導致錯誤 -->
@@ -57,7 +57,7 @@
     
       const app = createApp({
         setup(){
-					const url = ref('https://vue3-course-api.hexschool.io/v2');
+					const url = 'https://vue3-course-api.hexschool.io/v2';
 
 					const userData = reactive({
 						username:'',
@@ -66,14 +66,14 @@
 
 					// 登入按鈕的函式
 					const login = ()=>{
-						axios.post(`${url.value}/admin/signin`, userData).then(res=>{
+						axios.post(`${url}/admin/signin`, userData).then(res=>{
 							const { token, expired } = res.data;
 							// 把後端傳回來的token寫入cookie
 							// 要驗證需要這個cookie
 							document.cookie = `hexschool=${token}; expires=${new Date(expired)}`;
 							location.href = 'products.html'
 						}).catch(err=>{
-							console.log('axios錯誤',err);
+							alert('axios發生錯誤',err);
 						})
 					}
 
